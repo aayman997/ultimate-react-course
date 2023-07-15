@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap");
+
+* {
+	box-sizing : border-box;
+	margin     : 0;
+	padding    : 0;
+}
+
+html {
+	font-size : 62.5%;
+}
+
+body {
+	align-items      : center;
+	background-color : #EABFB9;
+	color            : #222;
+	display          : flex;
+	font-family      : "Cinzel Decorative", cursive;
+	font-size        : 2rem;
+	height           : 100vh;
+	justify-content  : center;
+}
+
+.app {
+	align-items    : center;
+	border         : 2px solid #222;
+	display        : flex;
+	flex-direction : column;
+	gap            : 4rem;
+	outline        : 2px solid #222;
+	outline-offset : 1.2rem;
+	padding        : 6rem 0;
+	width          : 112rem;
+}
+
+h1 {
+	font-size      : 6rem;
+	font-weight    : 400;
+	letter-spacing : 2px;
+	word-spacing   : 5px;
+}
+
+h2 {
+	margin-bottom : 2.4rem;
+	text-align    : center;
+}
+
+input {
+	background-color : #F0D2CE;
+	border           : none;
+	color            : inherit;
+	font-family      : inherit;
+	font-size        : 2rem;
+	padding          : 1.6rem 3.2rem;
+	width            : 32rem;
+}
+
+input:focus {
+	outline : 2px solid #222;
+}
+
+.weather {
+	display    : flex;
+	gap        : 2.4rem;
+	list-style : none;
+}
+
+.day {
+	align-items      : center;
+	background-color : #F0D2CE;
+	cursor           : pointer;
+
+	display          : flex;
+	flex-direction   : column;
+	gap              : 1.2rem;
+	padding          : 1.6rem 0 2rem;
+	width            : 12.8rem;
+}
+
+.day span {
+	font-size : 5.2rem;
+}
+
+.day.important {
+	background-color : #ECC5C0;
+	outline          : 2px solid #222;
+}
+
+.loader {
+	font-size   : 2.4rem;
+	font-weight : 700;
+}
