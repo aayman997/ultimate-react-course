@@ -1,0 +1,5 @@
+.spinnerFullpage {
+	background-color : var(--color-dark--1);
+	height           : calc(100vh - 5rem);
+	margin           : 2.5rem;
+}

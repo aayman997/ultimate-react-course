@@ -1,0 +1,47 @@
+.city {
+	background-color : var(--color-dark--2);
+	border-radius    : 7px;
+	display          : flex;
+	flex-direction   : column;
+	gap              : 2rem;
+
+	max-height       : 70%;
+	overflow         : scroll;
+	padding          : 2rem 3rem;
+	width            : 100%;
+}
+
+.row {
+	display        : flex;
+	flex-direction : column;
+	gap            : 0.5rem;
+}
+
+.city h6 {
+	color          : var(--color-light--1);
+	font-size      : 1.1rem;
+	font-weight    : 900;
+	text-transform : uppercase;
+}
+
+.city h3 {
+	align-items : center;
+	display     : flex;
+	font-size   : 1.9rem;
+	gap         : 1rem;
+}
+
+.city h3 span {
+	font-size   : 3.2rem;
+	line-height : 1;
+}
+
+.city p {
+	font-size : 1.6rem;
+}
+
+.city a:link,
+.city a:visited {
+	color     : var(--color-brand--1);
+	font-size : 1.6rem;
+}

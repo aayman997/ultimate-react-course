@@ -1,0 +1,28 @@
+.nav {
+	margin-bottom : 2rem;
+	margin-top    : 3rem;
+}
+
+.nav ul {
+	background-color : var(--color-dark--2);
+	border-radius    : 7px;
+	display          : flex;
+	list-style       : none;
+}
+
+.nav a:link,
+.nav a:visited {
+	border-radius   : 5px;
+	color           : inherit;
+	display         : block;
+	font-size       : 1.2rem;
+	font-weight     : 700;
+	padding         : 0.5rem 2rem;
+	text-decoration : none;
+	text-transform  : uppercase;
+}
+
+/* CSS Modules feature */
+.nav a:global(.active) {
+	background-color : var(--color-dark--0);
+}
