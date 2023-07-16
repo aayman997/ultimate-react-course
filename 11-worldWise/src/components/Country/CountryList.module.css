@@ -7,6 +7,6 @@
 
 	list-style            : none;
 	overflow-x            : hidden;
-	overflow-y            : scroll;
+	overflow-y            : auto;
 	width                 : 100%;
 }
