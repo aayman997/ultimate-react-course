@@ -1,32 +1,38 @@
-export const FinishScreen = ({points, maxPossiblePoints, highScore, dispatch}) => {
-    const percentage = (points / maxPossiblePoints) * 100;
+import {useQuestions} from "../contexts/QuestionsContext";
 
-    let emoji;
-    if (percentage === 100) {
-        emoji = "🥇";
-    }
-    if (percentage >= 80 && percentage < 100) {
-        emoji = "🎉";
-    }
+export const FinishScreen = () => {
+	const {dispatch, questions, points, highScore} = useQuestions();
 
-    if (percentage >= 50 && percentage < 80) {
-        emoji = "🙃";
-    }
-    if (percentage >= 0 && percentage < 50) {
-        emoji = "😏";
-    }
+	const maxPossiblePoints = questions.reduce((prev, cur) => prev + cur.points, 0);
 
-    if (percentage === 0) {
-        emoji = "🤦‍♂️";
-    }
-    return (
-        <>
-            <p className="result">
-                <span>{emoji}</span>
-                You scored <strong>{points}</strong> out of {maxPossiblePoints} ({Math.ceil(percentage)}%)
-            </p>
-            <p className="highscore">(High-score: {highScore} points)</p>
-            <button className="btn btn-ui" onClick={() => dispatch({type: "restart"})}>Restart Quiz</button>
-        </>
-    );
+	const percentage = (points / maxPossiblePoints) * 100;
+
+	let emoji;
+	if (percentage === 100) {
+		emoji = "🥇";
+	}
+	if (percentage >= 80 && percentage < 100) {
+		emoji = "🎉";
+	}
+
+	if (percentage >= 50 && percentage < 80) {
+		emoji = "🙃";
+	}
+	if (percentage >= 0 && percentage < 50) {
+		emoji = "😏";
+	}
+
+	if (percentage === 0) {
+		emoji = "🤦‍♂️";
+	}
+	return (
+		<>
+			<p className="result">
+				<span>{emoji}</span>
+				You scored <strong>{points}</strong> out of {maxPossiblePoints} ({Math.ceil(percentage)}%)
+			</p>
+			<p className="highscore">(High-score: {highScore} points)</p>
+			<button className="btn btn-ui" onClick={() => dispatch({type: "restart"})}>Restart Quiz</button>
+		</>
+	);
 };
