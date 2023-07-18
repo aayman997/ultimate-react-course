@@ -2,8 +2,11 @@ import styles from "./CountryList.module.css";
 import Spinner from "../Spinner/Spinner.jsx";
 import Message from "../Message/Message.jsx";
 import CountryItem from "./CountryItem.jsx";
+import {useCities} from "../../contexts/CitiesContext.jsx";
 
-export const CountryList = ({cities, isLoading}) => {
+export const CountryList = () => {
+	const {cities, isLoading} = useCities();
+
 	if (isLoading) {
 		return <Spinner />;
 	}

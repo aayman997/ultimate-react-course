@@ -6,7 +6,7 @@
 	gap              : 2rem;
 
 	max-height       : 70%;
-	overflow         : scroll;
+	overflow         : auto;
 	padding          : 2rem 3rem;
 	width            : 100%;
 }
