@@ -2,16 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import store from "./store";
+import storeV2 from "./store-v2";
 import {Provider} from "react-redux";
 
-store.dispatch({type: "account/deposit", payload: 250});
-// store.dispatch(createCustomer("Ahmed Ayman", 29706041300174));
+storeV2.dispatch({type: "account/deposit", payload: 250});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
-		<Provider store={store}>
+		<Provider store={storeV2}>
 			<App />
 		</Provider>
 	</React.StrictMode>

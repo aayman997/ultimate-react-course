@@ -12,26 +12,21 @@ function AccountOperations() {
 	const {loan: currentLoan, loanPurpose: currentLoanPurpose, balance: currentBalance, isLoading} = useSelector(state => state.account);
 
 	function handleDeposit() {
-		if (!depositAmount) {
-			return;
-		}
+		if (!depositAmount) return;
 		dispatch(deposit(depositAmount, currency));
 		setDepositAmount("");
 		setCurrency("USD");
 	}
 
 	function handleWithdrawal() {
-		if (!withdrawalAmount) {
-			return;
-		}
+		if (!withdrawalAmount) return;
 		dispatch(withdraw(withdrawalAmount));
 		setWithdrawalAmount("");
 	}
 
 	function handleRequestLoan() {
-		if (!loanAmount || loanPurpose) {
-			return;
-		}
+		if (!loanAmount || !loanPurpose) return;
+		console.log(loanAmount);
 		dispatch(requestLoan(loanAmount, loanPurpose));
 		setLoanAmount("");
 		setLoanPurpose("");
