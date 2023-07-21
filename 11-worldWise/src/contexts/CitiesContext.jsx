@@ -1,4 +1,4 @@
-import {createContext, useEffect, useContext, useReducer} from "react";
+import {createContext, useEffect, useContext, useReducer, useMemo, useCallback} from "react";
 import {BASE_URL} from "../util.js";
 
 const CitiesContext = createContext();
@@ -64,7 +64,7 @@ const CitiesProvider = ({children}) => {
 		fetchCities();
 	}, []);
 
-	const getCity = async (id) => {
+	const getCity = useCallback(async (id) => {
 		if (Number(id) === currentCity.id) {
 			return;
 		}
@@ -77,7 +77,7 @@ const CitiesProvider = ({children}) => {
 		} catch (e) {
 			dispatch({type: "rejected", payload: "Error getting city data."});
 		}
-	};
+	}, [currentCity.id]);
 
 	const createCity = async (newCity) => {
 		dispatch({type: "loading"});
@@ -108,18 +108,20 @@ const CitiesProvider = ({children}) => {
 		}
 	};
 
+	const value = useMemo(() => {
+		return {
+			cities,
+			isLoading,
+			error,
+			currentCity,
+			getCity,
+			createCity,
+			deleteCity
+		};
+	}, [cities, currentCity, error, getCity, isLoading]);
+
 	return (
-		<CitiesContext.Provider
-			value={{
-				cities,
-				isLoading,
-				error,
-				currentCity,
-				getCity,
-				createCity,
-				deleteCity
-			}}
-		>
+		<CitiesContext.Provider value={value}>
 			{children}
 		</CitiesContext.Provider>
 	);

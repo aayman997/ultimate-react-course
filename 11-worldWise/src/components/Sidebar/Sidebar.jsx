@@ -2,14 +2,12 @@ import styles from "./Sidebar.module.css";
 import Logo from "../Logo/Logo.jsx";
 import React from "react";
 import {AppNav} from "../AppNav/AppNav.jsx";
-import {Outlet, Link} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 
 export const Sidebar = () => {
 	return (
 		<div className={styles.sidebar}>
-			<Link to="/">
-				<Logo />
-			</Link>
+			<Logo />
 			<AppNav />
 			<Outlet />
 			<footer className={styles.footer}>

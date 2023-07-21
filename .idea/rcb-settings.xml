@@ -7,6 +7,11 @@
         <option name="port" value="5173" />
         <option name="scriptName" value="dev" />
       </DevServerState>
+      <DevServerState>
+        <option name="packageJsonPath" value="$PROJECT_DIR$/12-atomic-blog/package.json" />
+        <option name="port" value="3000" />
+        <option name="scriptName" value="start" />
+      </DevServerState>
     </option>
   </component>
 </project>

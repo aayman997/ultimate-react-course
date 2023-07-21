@@ -3,14 +3,16 @@ import {createContext, useContext, useReducer} from "react";
 const AuthContext = createContext();
 
 const initialState = {
-	user           : null,
-	isAuthenticated: false
+	user           : JSON.parse(localStorage.getItem("user")) || null,
+	isAuthenticated: !!JSON.parse(localStorage.getItem("user"))
 };
 const reducer = (state, action) => {
 	switch (action.type) {
 		case "login":
+			localStorage.setItem("user", JSON.stringify(action.payload));
 			return {...state, user: action.payload, isAuthenticated: true};
 		case "logout":
+			localStorage.removeItem("user");
 			return {...state, user: null, isAuthenticated: false};
 		default:
 			throw new Error("Unknown action type");

@@ -11,6 +11,7 @@ export const Map = () => {
 	const {cities} = useCities();
 	const [mapPosition, setMapPosition] = useState([40, 0]);
 	const [mapLat, mapLng] = useURLPosition();
+	const navigate = useNavigate();
 
 	const {
 		isLoading: isLoadingPosition,
@@ -31,6 +32,13 @@ export const Map = () => {
 		}
 	}, [geolocationPosition]);
 
+	const handleMarkerClick = (e) => {
+		const [lat, lng] = [e.latlng.lat, e.latlng.lng];
+
+		setMapPosition([lat, lng]);
+		navigate(`form?lat=${lat}&lng=${lng}`);
+	};
+
 	return (
 		<div className={styles.mapContainer}>
 			{!geolocationPosition && <Button type="position" onClick={getPosition}>
@@ -47,7 +55,11 @@ export const Map = () => {
 					url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
 				/>
 				{cities.map(city => (
-					<Marker position={[city.position.lat, city.position.lng]} key={city.id}>
+					<Marker
+						position={[city.position.lat, city.position.lng]}
+						key={city.id}
+						eventHandlers={{click: handleMarkerClick}}
+					>
 						<Popup>
 							<span>{city.emoji}</span>
 							<span>{city.cityName}</span>
@@ -73,6 +85,9 @@ const DetectClick = () => {
 	const navigate = useNavigate();
 
 	useMapEvents({
-		click: e => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
+		click: e => {
+			const [lat, lng] = [e.latlng.lat, e.latlng.lng];
+			navigate(`form?lat=${lat}&lng=${lng}`);
+		}
 	});
 };
