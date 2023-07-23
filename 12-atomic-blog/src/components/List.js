@@ -1,4 +1,4 @@
-import { usePosts} from "../PostContext";
+import {usePosts} from "../PostContext";
 
 export function List() {
 	const {posts} = usePosts();

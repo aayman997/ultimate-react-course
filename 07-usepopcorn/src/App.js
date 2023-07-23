@@ -15,61 +15,61 @@ import {useLocalStorage} from "./hooks/useLocalStorage";
 import {useMovies} from "./hooks/useMovies";
 
 const App = () => {
-    const [query, setQuery] = useState("");
-    const [selectedId, setSelectedId] = useState(null);
-    const {movies, isLoading, error} = useMovies(query);
-    const [watched, setWatched] = useLocalStorage([], "watched");
-    const handleSelectedMovie = (id) => {
-        setSelectedId(curId => id === curId ? null : id);
-    };
+	const [query, setQuery] = useState("");
+	const [selectedId, setSelectedId] = useState(null);
+	const {movies, isLoading, error} = useMovies(query);
+	const [watched, setWatched] = useLocalStorage([], "watched");
+	const handleSelectedMovie = (id) => {
+		setSelectedId(curId => id === curId ? null : id);
+	};
 
-    function handleCloseMovie() {
-        setSelectedId(null);
-    };
+	function handleCloseMovie() {
+		setSelectedId(null);
+	};
 
-    const handleAddWatch = (movie) => {
-        setWatched(watched => [...watched, movie]);
-    };
+	const handleAddWatch = (movie) => {
+		setWatched(watched => [...watched, movie]);
+	};
 
-    const handleDeleteWatched = (id) => {
-        setWatched(watched => watched.filter(movie => movie.imdbID !== id));
-    };
+	const handleDeleteWatched = (id) => {
+		setWatched(watched => watched.filter(movie => movie.imdbID !== id));
+	};
 
-    return (
-        <>
-            <NavBar>
-                <Logo />
-                <Search query={query} setQuery={setQuery} />
-                <NumResults moviesLength={movies.length} />
-            </NavBar>
+	return (
+		<>
+			<NavBar>
+				<Logo />
+				<Search query={query} setQuery={setQuery} />
+				<NumResults moviesLength={movies.length} />
+			</NavBar>
 
-            <Main>
-                <Box>
-                    {isLoading && <Loader />}
-                    {!isLoading && !error && <MovieList movies={movies} onSelectMovie={handleSelectedMovie} />}
-                    {error && query && <ErrorMessage message={error} />}
-                </Box>
-                <Box>
-                    {
-                        selectedId
-                        ? <MovieDetails
-                            selectedId={selectedId}
-                            onMovieClose={handleCloseMovie}
-                            onAddWatched={handleAddWatch}
-                            watched={watched}
-                        />
-                        : <>
-                            <WatchedSummary watched={watched} />
-                            <WatchedMovieList
-                                watched={watched}
-                                onDeleteWatched={handleDeleteWatched}
-                            />
-                        </>
-                    }
-                </Box>
-            </Main>
-        </>
-    );
+			<Main>
+				<Box>
+					{isLoading && <Loader />}
+					{!isLoading && !error && <MovieList movies={movies} onSelectMovie={handleSelectedMovie} />}
+					{error && query && <ErrorMessage message={error} />}
+				</Box>
+				<Box>
+					{
+						selectedId
+						? <MovieDetails
+							selectedId={selectedId}
+							onMovieClose={handleCloseMovie}
+							onAddWatched={handleAddWatch}
+							watched={watched}
+						/>
+						: <>
+							<WatchedSummary watched={watched} />
+							<WatchedMovieList
+								watched={watched}
+								onDeleteWatched={handleDeleteWatched}
+							/>
+						</>
+					}
+				</Box>
+			</Main>
+		</>
+	);
 };
 export default App;
 

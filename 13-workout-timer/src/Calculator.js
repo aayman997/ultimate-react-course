@@ -28,7 +28,7 @@ function Calculator({workouts, allowSound}) {
 
 	useEffect(() => {
 		document.title = `Your ${number}-exercise workout`;
-	},[number]);
+	}, [number]);
 
 	const handleInc = () => {
 		setDuration(duration => Math.floor(duration) + 1);

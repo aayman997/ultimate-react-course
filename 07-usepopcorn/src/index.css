@@ -169,8 +169,8 @@ body {
 
 .list img {
 	grid-row   : 1 / -1;
-	width      : 100%;
 	max-height : 60px;
+	width      : 100%;
 }
 
 .list h3 {

@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap");
 
 * {
+	box-sizing : border-box;
 	margin     : 0;
 	padding    : 0;
-	box-sizing : border-box;
 }
 
 html {
@@ -11,24 +11,24 @@ html {
 }
 
 body {
-	font-family      : "Roboto Mono", sans-serif;
-	color            : #252525;
-	font-weight      : 400;
 	background-color : #F7F2E9;
 	border-bottom    : 1.6rem solid #EDC84B;
+	color            : #252525;
+	font-family      : "Roboto Mono", sans-serif;
+	font-weight      : 400;
 	min-height       : 100vh;
 	padding          : 3.2rem;
 	padding-bottom   : 6rem;
 }
 
 .container {
-	max-width      : 80rem;
-	margin         : 0 auto;
-
-	display        : flex;
-	flex-direction : column;
 	align-items    : center;
+	display        : flex;
+
+	flex-direction : column;
 	gap            : 4.8rem;
+	margin         : 0 auto;
+	max-width      : 80rem;
 }
 
 /* *************** */
@@ -42,25 +42,25 @@ body {
 	color          : #EDC84B;
 	/* color: #af8602; */
 
-	text-transform : uppercase;
-	text-align     : center;
+	display        : block;
 	font-size      : 5.2rem;
 	font-weight    : 300;
 	letter-spacing : 3px;
 	position       : relative;
+	text-align     : center;
+	text-transform : uppercase;
 	width          : 100%;
-	display        : block;
 }
 
 .header h1::before,
 .header h1::after {
-	display          : block;
-	content          : "";
-	height           : 3px;
-	width            : 4rem;
 	background-color : #EDC84B;
+	content          : "";
+	display          : block;
+	height           : 3px;
 	position         : absolute;
 	top              : calc(50% - 1px);
+	width            : 4rem;
 }
 
 .header h1::before {
@@ -74,35 +74,35 @@ body {
 /* *************** */
 
 .menu {
+	align-items    : center;
 	display        : flex;
 	flex-direction : column;
-	align-items    : center;
 	gap            : 4rem;
 }
 
 .menu h2 {
-	display        : inline-block;
-	padding        : 1rem 0;
-	border-top     : 2px solid currentColor;
 	border-bottom  : 2px solid currentColor;
+	border-top     : 2px solid currentColor;
+	display        : inline-block;
 	font-size      : 2.4rem;
-	text-transform : uppercase;
-	letter-spacing : 3px;
 	font-weight    : 500;
+	letter-spacing : 3px;
+	padding        : 1rem 0;
+	text-transform : uppercase;
 }
 
 .menu > p {
 	font-size   : 1.5rem;
-	text-align  : center;
 	line-height : 1.6;
+	text-align  : center;
 	width       : 80%;
 }
 
 .pizzas {
-	list-style            : none;
 	display               : grid;
-	grid-template-columns : 1fr 1fr;
 	gap                   : 4.8rem;
+	grid-template-columns : 1fr 1fr;
+	list-style            : none;
 }
 
 .pizza {
@@ -111,9 +111,9 @@ body {
 }
 
 .pizza img {
-	width        : 12rem;
-	aspect-ratio : 1;
 	align-self   : start;
+	aspect-ratio : 1;
+	width        : 12rem;
 }
 
 .pizza div {
@@ -130,8 +130,8 @@ body {
 
 .pizza p {
 	font-size     : 1.4rem;
-	font-weight   : 300;
 	font-style    : italic;
+	font-weight   : 300;
 	margin-bottom : auto;
 }
 
@@ -156,21 +156,21 @@ body {
 }
 
 .order {
+	align-items    : center;
 	display        : flex;
 	flex-direction : column;
-	align-items    : center;
 	gap            : 2.4rem;
 }
 
 .btn {
-	color            : inherit;
-	font-family      : inherit;
+	background-color : #EDC84B;
 	border           : none;
+	color            : inherit;
+	cursor           : pointer;
+	font-family      : inherit;
 	font-size        : 1.4rem;
 	font-weight      : 500;
-	background-color : #EDC84B;
 	padding          : 1.4rem 3.2rem;
-	cursor           : pointer;
 	transition       : all 0.2s;
 }
 
