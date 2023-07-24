@@ -1,5 +1,7 @@
-function MenuItem({pizza}) {
-	const {id, name, unitPrice, ingredients, soldOut, imageUrl} = pizza;
+import { formatCurrency } from "../../utils/helpers.js";
+
+function MenuItem({ pizza }) {
+	const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
 	return (
 		<li>
@@ -7,9 +9,7 @@ function MenuItem({pizza}) {
 			<div>
 				<p>{name}</p>
 				<p>{ingredients.join(", ")}</p>
-				<div>
-					{!soldOut ? <p>{formatCurrency(unitPrice)}</p> : <p>Sold out</p>}
-				</div>
+				<div>{!soldOut ? <p>{formatCurrency(unitPrice)}</p> : <p>Sold out</p>}</div>
 			</div>
 		</li>
 	);

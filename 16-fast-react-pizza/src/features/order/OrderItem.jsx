@@ -1,5 +1,7 @@
-function OrderItem({item, isLoadingIngredients, ingredients}) {
-	const {quantity, name, totalPrice} = item;
+import { formatCurrency } from "../../utils/helpers.js";
+
+function OrderItem({ item, isLoadingIngredients, ingredients }) {
+	const { quantity, name, totalPrice } = item;
 
 	return (
 		<li>

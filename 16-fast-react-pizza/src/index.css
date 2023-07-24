@@ -1,4 +1,8 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
 	background-color : #F7F7F7;
 	color            : #444;
 	font-family      : system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -10,7 +14,7 @@ body {
 	gap                : 32px;
 	grid-template-rows : auto 1fr auto;
 	height             : 100dvh;
-}
+} */
 
 /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
 .loader {
