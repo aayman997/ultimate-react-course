@@ -11,10 +11,10 @@
 
 	/* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
 	.loader {
-		--c             : no-repeat linear-gradient(theme(colors.stone.800) 0 0);
+		--c             : no-repeat linear-gradient(theme("colors.stone.800") 0, theme("colors.stone.800") 0);
 		animation       : loading 1s infinite linear;
 		aspect-ratio    : 0.75;
-		background      : var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
+		background      : var(--c) 0 50%, var(--c) 50% 50%, var(--c) 100% 50%;
 		background-size : 20% 50%;
 		width           : 45px;
 	}
