@@ -61,7 +61,7 @@ function CreateOrder() {
 									dispatch(fetchAddress());
 								}}
 							>
-								<img src="/location-crosshairs-solid.svg" className="mr-2 inline-block h-5 w-5 align-middle" />
+								<img src="/location-crosshairs-solid.svg" className="mr-2 inline-block h-5 w-5 align-middle" alt="location icon" />
 								<span className="inline-block align-middle">Get Position</span>
 							</Button>
 						</span>
