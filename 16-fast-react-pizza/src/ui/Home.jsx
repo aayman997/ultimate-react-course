@@ -4,7 +4,7 @@ import { Button } from "./Button.jsx";
 import { getUser } from "../features/user/userSlice.js";
 
 function Home() {
-	const username = useSelector(getUser);
+	const { username } = useSelector(getUser);
 	return (
 		<div className="my-10 px-4 text-center sm:my-16">
 			<h1 className="mb-8 text-xl font-semibold md:text-3xl">

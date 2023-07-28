@@ -6,7 +6,7 @@ import { getUser } from "../user/userSlice.js";
 import EmptyCart from "./EmptyCart.jsx";
 
 function Cart() {
-	const username = useSelector(getUser);
+	const { username } = useSelector(getUser);
 	const cart = useSelector(getCart);
 	const dispatch = useDispatch();
 	if (!cart.length) return <EmptyCart />;
