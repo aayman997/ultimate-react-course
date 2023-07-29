@@ -2,65 +2,65 @@
 
 :root {
 	/* Indigo */
-	--color-brand-50     : #EEF2FF;
+	--color-blue-100     : #E0F2FE;
+	--color-blue-700     : #0369A1;
 	--color-brand-100    : #E0E7FF;
 	--color-brand-200    : #C7D2FE;
+	--color-brand-50     : #EEF2FF;
 	--color-brand-500    : #6366F1;
 	--color-brand-600    : #4F46E5;
 	--color-brand-700    : #4338CA;
-	--color-brand-800    : #3730A3;
-	--color-brand-900    : #312E81;
 
 	/* Grey */
+	--color-brand-800    : #3730A3;
+	--color-brand-900    : #312E81;
+	--backdrop-color     : rgba(255, 255, 255, 0.1);
+	--image-grayscale    : 0;
+	--color-green-100    : #DCFCE7;
+	--color-green-700    : #15803D;
 	--color-grey-0       : #FFF;
-	--color-grey-50      : #F9FAFB;
 	--color-grey-100     : #F3F4F6;
 	--color-grey-200     : #E5E7EB;
 	--color-grey-300     : #D1D5DB;
 	--color-grey-400     : #9CA3AF;
+
+	--color-grey-50      : #F9FAFB;
 	--color-grey-500     : #6B7280;
 	--color-grey-600     : #4B5563;
 	--color-grey-700     : #374151;
 	--color-grey-800     : #1F2937;
 	--color-grey-900     : #111827;
-
-	--color-blue-100     : #E0F2FE;
-	--color-blue-700     : #0369A1;
-	--color-green-100    : #DCFCE7;
-	--color-green-700    : #15803D;
-	--color-yellow-100   : #FEF9C3;
-	--color-yellow-700   : #A16207;
-	--color-silver-100   : #E5E7EB;
-	--color-silver-700   : #374151;
 	--color-indigo-100   : #E0E7FF;
 	--color-indigo-700   : #4338CA;
-
-	--color-red-100      : #FEE2E2;
-	--color-red-700      : #B91C1C;
-	--color-red-800      : #991B1B;
-
-	--backdrop-color     : rgba(255, 255, 255, 0.1);
-
-	--shadow-sm          : 0 1px 2px rgba(0, 0, 0, 0.04);
-	--shadow-md          : 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
 	--shadow-lg          : 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
+	--shadow-md          : 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
+
+	--image-opacity      : 100%;
+	--border-radius-lg   : 9px;
+	--border-radius-md   : 7px;
+
+	--border-radius-sm   : 5px;
 
 	--border-radius-tiny : 3px;
-	--border-radius-sm   : 5px;
-	--border-radius-md   : 7px;
-	--border-radius-lg   : 9px;
+	--color-red-100      : #FEE2E2;
+	--color-red-700      : #B91C1C;
+
+	--color-red-800      : #991B1B;
+	--color-silver-100   : #E5E7EB;
+	--color-silver-700   : #374151;
+	--shadow-sm          : 0 1px 2px rgba(0, 0, 0, 0.04);
 
 	/* For dark mode */
-	--image-grayscale    : 0;
-	--image-opacity      : 100%;
+	--color-yellow-100   : #FEF9C3;
+	--color-yellow-700   : #A16207;
 }
 
 *,
 *::before,
 *::after {
 	box-sizing : border-box;
-	padding    : 0;
 	margin     : 0;
+	padding    : 0;
 
 	/* Creating animations for dark mode */
 	transition : background-color 0.3s, border 0.3s;
@@ -71,21 +71,21 @@ html {
 }
 
 body {
-	font-family : "Poppins", sans-serif;
 	color       : var(--color-grey-700);
+	font-family : "Poppins", sans-serif;
 
-	transition  : color 0.3s, background-color 0.3s;
-	min-height  : 100vh;
-	line-height : 1.5;
 	font-size   : 1.6rem;
+	line-height : 1.5;
+	min-height  : 100vh;
+	transition  : color 0.3s, background-color 0.3s;
 }
 
 input,
 button,
 textarea,
 select {
-	font  : inherit;
 	color : inherit;
+	font  : inherit;
 }
 
 button {
@@ -131,15 +131,15 @@ h3,
 h4,
 h5,
 h6 {
-	overflow-wrap : break-word;
 	hyphens       : auto;
+	overflow-wrap : break-word;
 }
 
 img {
-	max-width : 100%;
+	filter    : grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 
 	/* For dark mode */
-	filter    : grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
+	max-width : 100%;
 }
 
 /*

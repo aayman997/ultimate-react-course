@@ -17,36 +17,36 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const booking = {};
-  const status = "checked-in";
+	const booking = {};
+	const status = "checked-in";
 
-  const moveBack = useMoveBack();
+	const moveBack = useMoveBack();
 
-  const statusToTagName = {
-    unconfirmed: "blue",
-    "checked-in": "green",
-    "checked-out": "silver",
-  };
+	const statusToTagName = {
+		unconfirmed  : "blue",
+		"checked-in" : "green",
+		"checked-out": "silver"
+	};
 
-  return (
-    <>
-      <Row type="horizontal">
-        <HeadingGroup>
-          <Heading as="h1">Booking #X</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
-        </HeadingGroup>
-        <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
-      </Row>
+	return (
+		<>
+			<Row type="horizontal">
+				<HeadingGroup>
+					<Heading as="h1">Booking #X</Heading>
+					<Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+				</HeadingGroup>
+				<ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+			</Row>
 
-      <BookingDataBox booking={booking} />
+			<BookingDataBox booking={booking} />
 
-      <ButtonGroup>
-        <Button variation="secondary" onClick={moveBack}>
-          Back
-        </Button>
-      </ButtonGroup>
-    </>
-  );
+			<ButtonGroup>
+				<Button variation="secondary" onClick={moveBack}>
+					Back
+				</Button>
+			</ButtonGroup>
+		</>
+	);
 }
 
 export default BookingDetail;

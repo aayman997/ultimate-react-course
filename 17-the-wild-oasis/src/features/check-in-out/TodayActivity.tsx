@@ -22,9 +22,11 @@ const TodayList = styled.ul`
   overflow-x: hidden;
 
   /* Removing scrollbars for webkit, firefox, and ms, respectively */
+
   &::-webkit-scrollbar {
     width: 0 !important;
   }
+
   scrollbar-width: none;
   -ms-overflow-style: none;
 `;
@@ -37,13 +39,13 @@ const NoActivity = styled.p`
 `;
 
 function Today() {
-  return (
-    <StyledToday>
-      <Row type="horizontal">
-        <Heading as="h2">Today</Heading>
-      </Row>
-    </StyledToday>
-  );
+	return (
+		<StyledToday>
+			<Row type="horizontal">
+				<Heading as="h2">Today</Heading>
+			</Row>
+		</StyledToday>
+	);
 }
 
 export default Today;
