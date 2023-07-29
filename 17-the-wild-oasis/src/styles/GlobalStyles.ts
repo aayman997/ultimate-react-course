@@ -98,7 +98,8 @@ const globalStyles = createGlobalStyle`
   }
 
   select:disabled,
-  input:disabled {
+  input:disabled,
+  textarea:disabled {
     background-color: var(--color-grey-200);
     color: var(--color-grey-500);
   }

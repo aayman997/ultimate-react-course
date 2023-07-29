@@ -1,6 +1,12 @@
 import styled, { css } from "styled-components";
 
-const Form = styled.form`
+type Types = "modal";
+
+interface FormProps {
+	type?: Types;
+}
+
+const Form = styled.form<FormProps>`
   ${(props) =>
           props.type !== "modal" &&
           css`
