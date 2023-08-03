@@ -5,6 +5,9 @@ import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm.tsx";
 import Row from "../../ui/Row.tsx";
 import { useDeleteCabin } from "./useDeleteCabin.ts";
+import { NewCabin } from "../../../types/NewCabin.ts";
+import { HiSquare2Stack, HiPencil, HiTrash } from "react-icons/hi2";
+import { useCreateCabin } from "./useCreateCabin.ts";
 
 const TableRow = styled.div`
   display: grid;
@@ -45,21 +48,31 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
+interface CabinType extends NewCabin {
+	id: number;
+	image: string;
+}
+
 interface CabinProps {
-	cabin: {
-		id: number;
-		name: string | null;
-		maxCapacity: number | null;
-		regularPrice: number | null;
-		discount: number | null;
-		image: string | null;
-	};
+	cabin: CabinType;
 }
 
 const CabinRow = ({ cabin }: CabinProps) => {
 	const { isDeleting, deleteCabin } = useDeleteCabin();
 	const [showForm, setShowForm] = useState(false);
-	const { id: cabinId, name, maxCapacity, regularPrice, discount, image } = cabin;
+	const { id: cabinId, name, maxCapacity, regularPrice, discount, image, description } = cabin;
+	const { isCreating, createCabin } = useCreateCabin();
+
+	const duplicate = () => {
+		createCabin({
+			name: `Copy of ${name}`,
+			maxCapacity,
+			regularPrice,
+			discount,
+			image,
+			description
+		});
+	};
 
 	return (
 		<>
@@ -69,9 +82,16 @@ const CabinRow = ({ cabin }: CabinProps) => {
 				<div>Fits up to {maxCapacity}</div>
 				<Price>{formatCurrency(regularPrice)}</Price>
 				{discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
-				<Row>
-					<StyledButton variation="secondary" size="small" onClick={() => setShowForm(show => !show)} disabled={isDeleting}>Edit</StyledButton>
-					<StyledButton variation="danger" size="small" onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>Delete</StyledButton>
+				<Row type="horizontal">
+					<StyledButton variation="primary" size="small" onClick={duplicate} disabled={isCreating}>
+						<HiSquare2Stack />
+					</StyledButton>
+					<StyledButton variation="secondary" size="small" onClick={() => setShowForm(show => !show)} disabled={isDeleting}>
+						<HiPencil />
+					</StyledButton>
+					<StyledButton variation="danger" size="small" onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
+						<HiTrash />
+					</StyledButton>
 				</Row>
 			</TableRow>
 			{showForm && <CreateCabinForm cabinToEdit={cabin} />}

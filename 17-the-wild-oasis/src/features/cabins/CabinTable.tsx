@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
-import { getCabins } from "../../services/apiCabins.ts";
 import Spinner from "../../ui/Spinner.tsx";
 import CabinRow from "./CabinRow.tsx";
+import { useCabins } from "./useCabins.ts";
+import Empty from "../../ui/Empty.tsx";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -28,18 +28,14 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 const CabinTable = () => {
-	const { isLoading, data: cabins, error } = useQuery({
-		queryKey: ["cabins"],
-		queryFn : getCabins
-	});
+	const { isLoading, error, cabins } = useCabins();
 
 	if (isLoading) {
 		return <Spinner />;
 	}
 
 	if (error) {
-		return null;
-		// 	return <Error />;
+		return <Empty resource="No cabins for now" />;
 	}
 
 	return (

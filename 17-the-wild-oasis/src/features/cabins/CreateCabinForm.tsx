@@ -7,31 +7,24 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import FormRow from "../../ui/FormRow.tsx";
 import { useCreateCabin } from "./useCreateCabin.ts";
 import { useEditCabin } from "./useEditCabin.ts";
+import { NewCabin } from "../../../types/NewCabin.ts";
 
-type Inputs = {
-	name: string;
-	maxCapacity: number;
-	regularPrice: number;
-	discount: number;
-	description: string;
-	image: FileList;
-}
-
-
-interface cabinToEdit extends Inputs {
+interface cabinToEdit extends NewCabin {
 	id: number;
 }
 
 interface CreateCabinFormProps {
-	cabinToEdit: cabinToEdit;
+	cabinToEdit: cabinToEdit | object;
 }
 
-const CreateCabinForm = ({ cabinToEdit }: CreateCabinFormProps) => {
+const CreateCabinForm = ({ cabinToEdit = {} }: CreateCabinFormProps) => {
 	const { createCabin, isCreating } = useCreateCabin();
 	const { editCabin, isEditing } = useEditCabin();
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	const { id: editId, ...editValues } = cabinToEdit;
 	const isEditSession = Boolean(editId);
-	const { register, handleSubmit, reset, getValues, formState: { errors } } = useForm<Inputs>({
+	const { register, handleSubmit, reset, getValues, formState: { errors } } = useForm<cabinToEdit>({
 		defaultValues: isEditSession ? editValues : {}
 	});
 
@@ -39,8 +32,10 @@ const CreateCabinForm = ({ cabinToEdit }: CreateCabinFormProps) => {
 	const isWorking = isCreating || isEditing;
 
 
-	const onsubmit: SubmitHandler<Inputs> = (data) => {
-		const image = typeof data.image === "string" ? data.image : data.image[0];
+	const onsubmit: SubmitHandler<cabinToEdit> = (data) => {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		const image = typeof data.image === "string" ? data?.image : data?.image?.item(0) as File;
 		if (isEditSession) {
 			editCabin(
 				{ newCabinData: { ...data, image }, id: editId },
@@ -48,6 +43,8 @@ const CreateCabinForm = ({ cabinToEdit }: CreateCabinFormProps) => {
 			);
 		} else {
 			createCabin(
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
 				{ ...data, image: image },
 				{ onSuccess: () => reset() }
 			);
