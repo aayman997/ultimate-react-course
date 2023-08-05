@@ -5,7 +5,10 @@ import Empty from "../../ui/Empty.tsx";
 import Table from "../../ui/Table.tsx";
 import { NewCabin } from "../../../types/NewCabin.ts";
 import Menus from "../../ui/Menus.tsx";
+import { useSearchParams } from "react-router-dom";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 interface CabinType extends NewCabin {
 	id: number;
 	image: string;
@@ -13,6 +16,7 @@ interface CabinType extends NewCabin {
 
 const CabinTable = () => {
 	const { isLoading, error, cabins } = useCabins();
+	const [searchParams] = useSearchParams();
 
 	if (isLoading) {
 		return <Spinner />;
@@ -21,6 +25,23 @@ const CabinTable = () => {
 	if (error) {
 		return <Empty resource="No cabins for now" />;
 	}
+
+	const filterValue = searchParams.get("discount") ?? "all";
+	let filteredCabins;
+	if (filterValue === "all") {
+		filteredCabins = cabins;
+	}
+	if (filterValue === "no-discount") {
+		filteredCabins = cabins?.filter(cabin => cabin.discount === 0);
+	}
+	if (filterValue === "with-discount") {
+		filteredCabins = cabins?.filter(cabin => cabin.discount !== 0);
+	}
+
+	const sortBy = searchParams.get("sortBy") ?? "startDate-asc";
+	const [field, direction] = sortBy.split("-");
+	const modifier = direction === "asc" ? 1 : -1;
+	const sortedCabins = filteredCabins.sort((a, b) => (a[field] - b[field]) * modifier);
 
 	return (
 		<Menus>
@@ -33,7 +54,7 @@ const CabinTable = () => {
 					<div>Discount</div>
 					<div></div>
 				</Table.Header>
-				<Table.Body data={cabins as CabinType[]} render={(cabin: CabinType) => <CabinRow cabin={cabin} key={cabin.id} />} />
+				<Table.Body data={sortedCabins as CabinType[]} render={(cabin: CabinType) => <CabinRow cabin={cabin} key={cabin.id} />} />
 			</Table>
 		</Menus>
 	);
