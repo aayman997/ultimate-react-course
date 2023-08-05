@@ -4,6 +4,7 @@ import { useSetting } from "./useSetting.ts";
 import Form from "../../ui/Form.tsx";
 import Spinner from "../../ui/Spinner.tsx";
 import { useUpdateSetting } from "./useUpdateSetting.ts";
+import React from "react";
 
 function UpdateSettingsForm() {
 	const {

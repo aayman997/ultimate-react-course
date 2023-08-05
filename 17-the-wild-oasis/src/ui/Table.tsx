@@ -1,4 +1,32 @@
 import styled from "styled-components";
+import { createContext, ReactNode, useContext } from "react";
+import { NewCabin } from "../../types/NewCabin.ts";
+
+interface CommonRowProps {
+	columns: string;
+}
+
+type TableContextType = {
+	columns: string;
+};
+
+interface BaseTableType {
+	children: ReactNode;
+}
+
+interface TableType extends BaseTableType {
+	columns: string;
+}
+
+interface CabinType extends NewCabin {
+	id: number;
+	image: string;
+}
+
+interface BodyTypes {
+	data: CabinType[] | [];
+	render: (cabin: CabinType) => JSX.Element;
+}
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -9,7 +37,7 @@ const StyledTable = styled.div`
   overflow: hidden;
 `;
 
-const CommonRow = styled.div`
+const CommonRow = styled.div<CommonRowProps>`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
   column-gap: 2.4rem;
@@ -59,3 +87,37 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+const TableContext = createContext<TableContextType>({ columns: "" });
+
+const Table = ({ columns, children }: TableType) => {
+	return (
+		<TableContext.Provider value={{ columns }}>
+			<StyledTable role="table">{children}</StyledTable>
+		</TableContext.Provider>
+	);
+};
+
+const Header = ({ children }: BaseTableType) => {
+	const { columns } = useContext(TableContext);
+	return <StyledHeader role="row" columns={columns} as="header">{children}</StyledHeader>;
+};
+
+const Row = ({ children }: BaseTableType) => {
+	const { columns } = useContext(TableContext);
+	return <StyledRow role="row" columns={columns}>{children}</StyledRow>;
+};
+
+const Body = ({ data, render }: BodyTypes) => {
+	if (!data) {
+		return <Empty>No data to show at the moment</Empty>;
+	}
+	return (
+		<StyledBody>{data.map(render)}</StyledBody>
+	);
+};
+Table.Header = Header;
+Table.Body = Body;
+Table.Row = Row;
+Table.Footer = Footer;
+export default Table;

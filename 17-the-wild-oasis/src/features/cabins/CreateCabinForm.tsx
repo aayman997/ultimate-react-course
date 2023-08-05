@@ -14,10 +14,11 @@ interface cabinToEdit extends NewCabin {
 }
 
 interface CreateCabinFormProps {
-	cabinToEdit: cabinToEdit | object;
+	cabinToEdit?: cabinToEdit | object;
+	onCloseModal?: () => void;
 }
 
-const CreateCabinForm = ({ cabinToEdit = {} }: CreateCabinFormProps) => {
+const CreateCabinForm = ({ cabinToEdit = {}, onCloseModal }: CreateCabinFormProps) => {
 	const { createCabin, isCreating } = useCreateCabin();
 	const { editCabin, isEditing } = useEditCabin();
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -39,20 +40,30 @@ const CreateCabinForm = ({ cabinToEdit = {} }: CreateCabinFormProps) => {
 		if (isEditSession) {
 			editCabin(
 				{ newCabinData: { ...data, image }, id: editId },
-				{ onSuccess: () => reset() }
+				{
+					onSuccess: () => {
+						reset();
+						onCloseModal?.();
+					}
+				}
 			);
 		} else {
 			createCabin(
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				{ ...data, image: image },
-				{ onSuccess: () => reset() }
+				{
+					onSuccess: () => {
+						reset();
+						onCloseModal?.();
+					}
+				}
 			);
 		}
 	};
 
 	return (
-		<Form onSubmit={handleSubmit(onsubmit)}>
+		<Form onSubmit={handleSubmit(onsubmit)} type={onCloseModal ? "modal" : "regular"}>
 			<FormRow error={errors?.name?.message} label="Cabine name">
 				<Input
 					type="text" id="name" disabled={isWorking}  {...register("name", {
@@ -107,7 +118,7 @@ const CreateCabinForm = ({ cabinToEdit = {} }: CreateCabinFormProps) => {
 			<FormRow>
 				<>
 					{/* type is an HTML attribute! */}
-					<Button variation="secondary" type="reset">Cancel</Button>
+					<Button variation="secondary" type="reset" onClick={() => onCloseModal?.()}>Cancel</Button>
 					<Button disabled={isWorking}>{isEditSession ? "Edit cabin" : "create new cabin"}</Button>
 				</>
 			</FormRow>
