@@ -1,4 +1,11 @@
 import styled from "styled-components";
+import LoginForm from "../features/authentication/LoginForm.tsx";
+import Heading from "../ui/Heading.tsx";
+import Logo from "../ui/Logo.tsx";
+import { useUser } from "../features/authentication/useUser.ts";
+import Spinner from "../ui/Spinner.tsx";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginLayout = styled.main`
   min-height: 100vh;
@@ -10,8 +17,40 @@ const LoginLayout = styled.main`
   background-color: var(--color-grey-50);
 `;
 
+const FullPage = styled.div`
+  height: 100vh;
+  background-color: var(--color-grey-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 function Login() {
-	return <LoginLayout>Login</LoginLayout>;
+	const { isAuthenticated, isLoading } = useUser();
+	const navigate = useNavigate();
+
+
+	useEffect(() => {
+		if (isAuthenticated && !isLoading) {
+			navigate("/dashboard");
+		}
+	}, [isAuthenticated, isLoading, navigate]);
+
+	if (isLoading && !isAuthenticated) {
+		return (
+			<FullPage>
+				<Spinner />
+			</FullPage>
+		);
+	}
+
+	return (
+		<LoginLayout>
+			<Logo />
+			<Heading as="h4">Log in to your account</Heading>
+			<LoginForm />
+		</LoginLayout>
+	);
 }
 
 export default Login;
