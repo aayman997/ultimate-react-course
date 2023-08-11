@@ -8,7 +8,8 @@ interface CommonRowProps {
 }
 
 type TableContextType = {
-	columns: string;
+	columns?: string;
+	$columns?: string;
 };
 
 interface BaseTableType {
@@ -16,7 +17,7 @@ interface BaseTableType {
 }
 
 interface TableType extends BaseTableType {
-	columns: string;
+	$columns: string;
 }
 
 
@@ -27,7 +28,7 @@ interface CabinType extends NewCabin {
 
 interface BodyTypes {
 	data: CabinType[] | BookingType[] | [];
-	render: (cabins: CabinType | BookingType ) => JSX.Element;
+	render: (cabins: CabinType | BookingType) => JSX.Element;
 }
 
 const StyledTable = styled.div`
@@ -92,22 +93,22 @@ const Empty = styled.p`
 
 const TableContext = createContext<TableContextType>({ columns: "" });
 
-const Table = ({ columns, children }: TableType) => {
+const Table = ({ $columns, children }: TableType) => {
 	return (
-		<TableContext.Provider value={{ columns }}>
+		<TableContext.Provider value={{ $columns }}>
 			<StyledTable role="table">{children}</StyledTable>
 		</TableContext.Provider>
 	);
 };
 
 const Header = ({ children }: BaseTableType) => {
-	const { columns } = useContext(TableContext);
-	return <StyledHeader role="row" $columns={columns} as="header">{children}</StyledHeader>;
+	const { $columns } = useContext(TableContext);
+	return <StyledHeader role="row" $columns={$columns} as="header">{children}</StyledHeader>;
 };
 
 const Row = ({ children }: BaseTableType) => {
-	const { columns } = useContext(TableContext);
-	return <StyledRow role="row" $columns={columns}>{children}</StyledRow>;
+	const { $columns } = useContext(TableContext);
+	return <StyledRow role="row" $columns={$columns}>{children}</StyledRow>;
 };
 
 const Body = ({ data, render }: BodyTypes) => {
