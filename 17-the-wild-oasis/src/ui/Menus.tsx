@@ -36,8 +36,8 @@ const StyledList = styled.ul`
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: ${(props) => props.$position.x}px;
+  top: ${(props) => props.$position.y}px;
 `;
 
 const StyledButton = styled.button`
@@ -105,7 +105,7 @@ const List = ({ id, children }) => {
 	}
 	return (
 		createPortal(
-			<StyledList position={position} ref={ref}>{children}</StyledList>,
+			<StyledList $position={position} ref={ref}>{children}</StyledList>,
 			document.body
 		)
 	);

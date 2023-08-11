@@ -22,8 +22,8 @@ const CabinTable = () => {
 		return <Spinner />;
 	}
 
-	if (error) {
-		return <Empty resource="No cabins for now" />;
+	if (!cabins?.length || error) {
+		return <Empty resourceName="cabins" />;
 	}
 
 	const filterValue = searchParams.get("discount") ?? "all";
@@ -45,7 +45,7 @@ const CabinTable = () => {
 
 	return (
 		<Menus>
-			<Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+			<Table $columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
 				<Table.Header>
 					<div></div>
 					<div>Cabin</div>

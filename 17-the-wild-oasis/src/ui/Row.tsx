@@ -2,11 +2,12 @@ import styled, { css } from "styled-components";
 
 interface RowProps {
 	type?: "horizontal" | "verticale";
+	$gap?: string;
 }
 
 const Row = styled.div<RowProps>`
   display: flex;
-
+  gap: ${props => props.$gap ?? "0"};
   ${props => props.type === "horizontal" &&
           css`
 

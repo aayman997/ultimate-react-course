@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { createContext, ReactNode, useContext } from "react";
 import { NewCabin } from "../../types/NewCabin.ts";
+import { BookingType } from "../../types/Booking.ts";
 
 interface CommonRowProps {
-	columns: string;
+	$columns: string;
 }
 
 type TableContextType = {
@@ -18,14 +19,15 @@ interface TableType extends BaseTableType {
 	columns: string;
 }
 
+
 interface CabinType extends NewCabin {
 	id: number;
 	image: string;
 }
 
 interface BodyTypes {
-	data: CabinType[] | [];
-	render: (cabin: CabinType) => JSX.Element;
+	data: CabinType[] | BookingType[] | [];
+	render: (cabins: CabinType | BookingType ) => JSX.Element;
 }
 
 const StyledTable = styled.div`
@@ -39,7 +41,7 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div<CommonRowProps>`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
+  grid-template-columns: ${(props) => props.$columns};
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
@@ -100,16 +102,16 @@ const Table = ({ columns, children }: TableType) => {
 
 const Header = ({ children }: BaseTableType) => {
 	const { columns } = useContext(TableContext);
-	return <StyledHeader role="row" columns={columns} as="header">{children}</StyledHeader>;
+	return <StyledHeader role="row" $columns={columns} as="header">{children}</StyledHeader>;
 };
 
 const Row = ({ children }: BaseTableType) => {
 	const { columns } = useContext(TableContext);
-	return <StyledRow role="row" columns={columns}>{children}</StyledRow>;
+	return <StyledRow role="row" $columns={columns}>{children}</StyledRow>;
 };
 
 const Body = ({ data, render }: BodyTypes) => {
-	if (!data) {
+	if (!data.length) {
 		return <Empty>No data to show at the moment</Empty>;
 	}
 	return (

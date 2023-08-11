@@ -15,7 +15,7 @@ type Variations = {
 // Define props type for the Button component
 interface ButtonProps {
 	size?: SizeType;
-	variation?: VariationType;
+	$variation?: VariationType;
 }
 
 // Define the complete CSS type for the Button component
@@ -75,11 +75,11 @@ const Button = styled.button<ButtonProps>`
   box-shadow: var(--shadow-sm);
 
   ${props => props.size && sizes[props.size]}
-  ${props => props.variation && variations[props.variation]}
+  ${props => props.$variation && variations[props.$variation]}
 `;
 
 Button.defaultProps = {
-	variation: "primary",
+	$variation: "primary",
 	size     : "medium"
 };
 

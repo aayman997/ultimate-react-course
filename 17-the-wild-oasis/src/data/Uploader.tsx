@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { isFuture, isPast, isToday } from "date-fns";
-// @ts-ignore
 import supabase from "../services/supabase";
 import Button from "../ui/Button";
 import { subtractDates } from "../utils/helpers";
@@ -71,9 +70,10 @@ async function createBookings() {
 		const cabin = cabins.at(booking.cabinId - 1);
 		const numNights = subtractDates(booking.endDate, booking.startDate);
 		const cabinPrice = numNights * (cabin.regularPrice - cabin.discount);
-		const extrasPrice = booking.hasBreakfast
-		                    ? numNights * 15 * booking.numGuests
-		                    : 0; // hardcoded breakfast price
+		const extrasPrice =
+			booking.hasBreakfast
+			? numNights * 15 * booking.numGuests
+			: 0; // hardcoded breakfast price
 		const totalPrice = cabinPrice + extrasPrice;
 
 		let status;
