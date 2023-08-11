@@ -1,6 +1,29 @@
 import supabase from "./supabase.ts";
 import { UserType } from "../../types/UserType.ts";
 
+interface CreateUserType extends UserType {
+	fullName: string;
+}
+
+export const singUp = async ({ fullName, email, password }: CreateUserType) => {
+	const { data, error } = await supabase.auth.signUp({
+		email,
+		password,
+		options: {
+			data: {
+				fullName,
+				avatar: ""
+			}
+		}
+	});
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
 export const login = async ({ email, password }: UserType) => {
 	const { data, error } = await supabase.auth.signInWithPassword({
 		email,
@@ -16,7 +39,7 @@ export const login = async ({ email, password }: UserType) => {
 
 export const getCurrentUser = async () => {
 	const { data: session } = await supabase.auth.getSession();
-	if (!session || !session?.session) {
+	if (!session?.session) {
 		return null;
 	}
 
@@ -26,7 +49,13 @@ export const getCurrentUser = async () => {
 		throw new Error(error.message);
 	}
 
-	console.log("logged user", data);
-
 	return data?.user;
+};
+
+
+export const logout = async () => {
+	const { error } = await supabase.auth.signOut();
+	if (error) {
+		throw new Error(error.message);
+	}
 };
