@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useUser } from "./useUser.ts";
 
 const StyledUserAvatar = styled.div`
   display: flex;
@@ -19,3 +20,15 @@ const Avatar = styled.img`
   border-radius: 50%;
   outline: 2px solid var(--color-grey-100);
 `;
+const UserAvatar = () => {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	const { user: { user_metadata: { fullName, avatar } } } = useUser();
+	return (
+		<StyledUserAvatar>
+			<Avatar src={avatar || "default-user.jpg"} alt={`Avatar of ${fullName}`} />
+			<span>{fullName}</span>
+		</StyledUserAvatar>
+	);
+};
+export default UserAvatar;
