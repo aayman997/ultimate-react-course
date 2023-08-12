@@ -1,17 +1,27 @@
 import supabase from "./supabase";
 
-export async function getSettings() {
+interface SettingsType {
+	created_at: string;
+	id: number;
+	breakfastPrice: number;
+	maxBookingLength: number;
+	maxGuestsPerBooking: number;
+	minBookingLength: number;
+}
+
+export const getSettings = async (): Promise<SettingsType> => {
 	const { data, error } = await supabase.from("settings").select("*").single();
 
 	if (error) {
 		console.error(error);
 		throw new Error("Settings could not be loaded");
 	}
-	return data;
-}
+
+	return data as SettingsType;
+};
 
 // We expect a newSetting object that looks like {setting: newValue}
-export async function updateSetting(newSetting: object) {
+export const updateSetting = async (newSetting: object): Promise<SettingsType> => {
 	const { data, error } = await supabase
 		.from("settings")
 		.update(newSetting)
@@ -24,4 +34,4 @@ export async function updateSetting(newSetting: object) {
 		throw new Error("Settings could not be updated");
 	}
 	return data;
-}
+};

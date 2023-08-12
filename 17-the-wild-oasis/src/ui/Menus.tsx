@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, ReactNode, Dispatch, SetStateAction } from "react";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import { useOutsideClick } from "../hooks/useOutsideClick.ts";
+import SpinnerMini from "./SpinnerMini.tsx";
 
 const Menu = styled.div`
   display: flex;
@@ -28,8 +29,16 @@ const StyledToggle = styled.button`
     color: var(--color-grey-700);
   }
 `;
+type PositionType = {
+	x: number;
+	y: number
+}
 
-const StyledList = styled.ul`
+interface StyledListProps {
+	$position: PositionType;
+}
+
+const StyledList = styled.ul<StyledListProps>`
   position: fixed;
 
   background-color: var(--color-grey-0);
@@ -65,10 +74,23 @@ const StyledButton = styled.button`
   }
 `;
 
-const MenusContext = createContext("");
-const Menus = ({ children }) => {
+interface createContextProps {
+	openId: string;
+	close: () => void;
+	open: Dispatch<SetStateAction<string>>;
+	position: PositionType | null;
+	setPosition: Dispatch<SetStateAction<PositionType | null>>;
+}
+
+const MenusContext = createContext<createContextProps>({} as createContextProps);
+
+interface MenusType {
+	children: ReactNode;
+}
+
+const Menus = ({ children }: MenusType) => {
 	const [openId, setOpenId] = useState("");
-	const [position, setPosition] = useState(null);
+	const [position, setPosition] = useState<PositionType | null>(null);
 	const close = () => setOpenId("");
 	const open = setOpenId;
 	return (
@@ -78,15 +100,23 @@ const Menus = ({ children }) => {
 	);
 };
 
-const Toggle = ({ id }) => {
+interface ToggleProps {
+	id: number;
+}
+
+const Toggle = ({ id }: ToggleProps) => {
 	const { openId, close, open, setPosition } = useContext(MenusContext);
-	const handleClick = (e) => {
-		const rect = e.target.closest("button").getBoundingClientRect();
+	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		const rect = (e.target as HTMLButtonElement).closest("button")?.getBoundingClientRect();
+		if (!rect) {
+			return;
+		}
 		setPosition({
 			x: window.innerWidth - rect.width - rect.x,
 			y: rect.y + rect.height
 		});
-		openId === "" || openId !== id ? open(id) : close();
+		openId === "" || openId !== id.toString() ? open(id.toString()) : close();
 	};
 
 	return (
@@ -96,32 +126,51 @@ const Toggle = ({ id }) => {
 	);
 };
 
-const List = ({ id, children }) => {
-	const { openId, position, close } = useContext(MenusContext);
-	const ref = useOutsideClick(close);
+interface ListProps {
+	id: number;
+	children: ReactNode;
+}
 
-	if (openId !== id) {
+const List = ({ id, children }: ListProps) => {
+	const { openId, position, close } = useContext(MenusContext);
+	const ref = useOutsideClick<HTMLUListElement>(close, false);
+
+	if (openId !== id.toString()) {
 		return;
 	}
 	return (
 		createPortal(
-			<StyledList $position={position} ref={ref}>{children}</StyledList>,
+			<StyledList $position={position as PositionType} ref={ref}>{children}</StyledList>,
 			document.body
 		)
 	);
 };
-const Button = ({ children, icon, onClick }) => {
+
+interface ButtonProps {
+	children: ReactNode;
+	icon: ReactNode | string;
+	onClick?: () => void;
+	disabled?: boolean;
+	isLoading?: boolean;
+}
+
+const Button = ({ children, icon, onClick, disabled, isLoading }: ButtonProps) => {
 	const { close } = useContext(MenusContext);
-	const ref = useOutsideClick(close);
 	const handleClick = () => {
 		onClick?.();
 		close();
 	};
 	return (
 		<li>
-			<StyledButton onClick={handleClick}>
-				{icon}
-				<span>{children}</span>
+			<StyledButton onClick={handleClick} disabled={disabled}>
+				{
+					isLoading
+					? <SpinnerMini />
+					: <>
+						{icon}
+						<span>{children}</span>
+					</>
+				}
 			</StyledButton>
 		</li>
 	);

@@ -6,6 +6,7 @@ import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
 
 import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
+import { BookingType } from "../../../types/Booking.ts";
 
 const StyledBookingDataBox = styled.section`
   /* Box */
@@ -40,7 +41,7 @@ const Header = styled.header`
   }
 
   & span {
-    font-family: "Sono";
+    font-family: "Sono", sans-serif;
     font-size: 2rem;
     margin-left: 4px;
   }
@@ -100,8 +101,12 @@ const Footer = styled.footer`
   text-align: right;
 `;
 
+interface BookingDataBoxProps {
+	booking: BookingType;
+}
+
 // A purely presentational component
-function BookingDataBox({ booking }) {
+function BookingDataBox({ booking }: BookingDataBoxProps) {
 	const {
 		created_at,
 		startDate,
@@ -163,13 +168,13 @@ function BookingDataBox({ booking }) {
 					{hasBreakfast ? "Yes" : "No"}
 				</DataItem>
 
-				<Price $isPaid={isPaid}>
+				<Price $isPaid={isPaid as boolean}>
 					<DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
 						{formatCurrency(totalPrice)}
 
 						{hasBreakfast &&
-							` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-								extrasPrice
+							` (${formatCurrency(cabinPrice as number)} cabin + ${formatCurrency(
+								extrasPrice as number
 							)} breakfast)`}
 					</DataItem>
 

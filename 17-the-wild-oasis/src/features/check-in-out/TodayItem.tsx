@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Tag from "../../ui/Tag.tsx";
 import { Flag } from "../../ui/Flag.tsx";
 import Button from "../../ui/Button.tsx";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CheckoutButton from "./CheckoutButton.tsx";
 
 const StyledTodayItem = styled.li`
@@ -23,7 +23,23 @@ const StyledTodayItem = styled.li`
 const Guest = styled.div`
   font-weight: 500;
 `;
-const TodayItem = ({ activity }) => {
+
+interface TodayItemProps {
+	activity: {
+		id: number;
+		status: string;
+		guests: {
+			fullName: string;
+			email: string;
+			country?: string;
+			countryFlag?: string;
+			nationalID?: string;
+		};
+		numNights: number;
+	};
+}
+
+const TodayItem = ({ activity }: TodayItemProps) => {
 	const { id, status, guests, numNights } = activity;
 	return (
 		<StyledTodayItem>

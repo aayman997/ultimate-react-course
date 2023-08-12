@@ -1,7 +1,12 @@
 import supabase, { supabaseUrl } from "./supabase.ts";
 import { NewCabin } from "../../types/NewCabin.ts";
 
-export const getCabins = async () => {
+interface CabinType extends NewCabin {
+	image: string;
+	id: number;
+}
+
+export const getCabins = async (): Promise<CabinType[]> => {
 	const { data, error } = await supabase
 		.from("cabins")
 		.select("*")
@@ -10,13 +15,13 @@ export const getCabins = async () => {
 		console.error(error);
 		throw new Error("Cabins could not be loaded");
 	}
-	return data;
+	return data as CabinType[];
 };
 
-export const createEditCabin = async (newCabin: NewCabin, id?: number) => {
-	const hasImagePath: boolean = newCabin.image?.startsWith?.(supabaseUrl);
-	const imageName: string = `${Math.random()}-${newCabin.image.name}`.replace("/", "");
-	const imagePath: FileList | File | string = hasImagePath ? newCabin.image : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+export const createEditCabin = async (newCabin: NewCabin, id?: number): Promise<CabinType> => {
+	const hasImagePath: boolean = (newCabin.image as unknown as string)?.startsWith?.(supabaseUrl);
+	const imageName: string = `${Math.random()}-${(newCabin.image as File).name}`.replace("/", "");
+	const imagePath: File | string = hasImagePath ? newCabin.image as File : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}` as string;
 	// 1. Create/Edit cabin
 	// let query = supabase.from("cabins");
 	let query;
@@ -47,7 +52,7 @@ export const createEditCabin = async (newCabin: NewCabin, id?: number) => {
 
 	// 2. Upload Image
 	if (hasImagePath) {
-		return data;
+		return data as CabinType;
 	}
 	const { error: storageError } = await supabase
 		.storage
@@ -63,7 +68,7 @@ export const createEditCabin = async (newCabin: NewCabin, id?: number) => {
 		console.error(storageError);
 		throw new Error("Cabin image could not be uploaded and the cabin was not created");
 	}
-	return data;
+	return data as CabinType;
 };
 
 export const deleteCabin = async (id: number) => {

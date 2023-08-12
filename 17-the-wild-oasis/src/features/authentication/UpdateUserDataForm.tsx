@@ -11,13 +11,8 @@ import { useUpdateUser } from "./useUpdateUser.ts";
 
 function UpdateUserDataForm() {
 	// We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
-	const {
-		user: {
-			email,
-			user_metadata: { fullName: currentFullName }
-		}
-	} = useUser();
-
+	const { user } = useUser();
+	const { email, user_metadata: { fullName: currentFullName } } = user;
 	const [fullName, setFullName] = useState(currentFullName);
 	const [avatar, setAvatar] = useState<File | null>(null);
 	const { updateUser, isUpdating } = useUpdateUser();

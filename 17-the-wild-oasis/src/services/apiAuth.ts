@@ -3,6 +3,11 @@ import { UserType } from "../../types/UserType.ts";
 
 interface CreateUserType extends UserType {
 	fullName: string;
+	password: string;
+}
+
+interface LoginUserType extends UserType {
+	password: string;
 }
 
 export const singUp = async ({ fullName, email, password }: CreateUserType) => {
@@ -24,7 +29,7 @@ export const singUp = async ({ fullName, email, password }: CreateUserType) => {
 	return data;
 };
 
-export const login = async ({ email, password }: UserType) => {
+export const login = async ({ email, password }: LoginUserType) => {
 	const { data, error } = await supabase.auth.signInWithPassword({
 		email,
 		password
@@ -37,7 +42,7 @@ export const login = async ({ email, password }: UserType) => {
 	return data;
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<UserType | null> => {
 	const { data: session } = await supabase.auth.getSession();
 	if (!session?.session) {
 		return null;
@@ -48,8 +53,7 @@ export const getCurrentUser = async () => {
 	if (error) {
 		throw new Error(error.message);
 	}
-
-	return data?.user;
+	return data.user as UserType;
 };
 
 

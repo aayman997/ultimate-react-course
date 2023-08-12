@@ -1,8 +1,9 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 import { PAGE_SIZE } from "../utils/constants.ts";
+import { BookingType } from "../../types/Booking.ts";
 
-interface GetBookingsType {
+interface GetBookingsParamsType {
 	filter: {
 		field: string,
 		value: string,
@@ -14,7 +15,12 @@ interface GetBookingsType {
 	page: number | null;
 }
 
-export const getBookings = async ({ filter, sortBy, page }: GetBookingsType) => {
+interface GetBookingsReturnType {
+	data: BookingType[];
+	count: number | null;
+}
+
+export const getBookings = async ({ filter, sortBy, page }: GetBookingsParamsType): Promise<GetBookingsReturnType> => {
 	let query = supabase
 		.from("bookings")
 		.select(
@@ -50,10 +56,10 @@ export const getBookings = async ({ filter, sortBy, page }: GetBookingsType) => 
 		throw new Error("Bookings could not be loaded");
 	}
 
-	return { data, count };
+	return { data: data as unknown as BookingType[], count: count as number };
 };
 
-export const getBooking = async (id: number) => {
+export const getBooking = async (id: number): Promise<BookingType> => {
 	const { data, error } = await supabase
 		.from("bookings")
 		.select("*, cabins(*), guests(*)")
@@ -65,13 +71,13 @@ export const getBooking = async (id: number) => {
 		throw new Error("Booking not found");
 	}
 
-	return data;
+	return data as BookingType;
 };
 
 // Returns all BOOKINGS that are were created after the given date.
 // Useful to get bookings created in the last 30 days, for example.
 // date: ISOString
-export const getBookingsAfterDate = async (date: string) => {
+export const getBookingsAfterDate = async (date: string): Promise<BookingType[]> => {
 	const { data, error } = await supabase
 		.from("bookings")
 		.select("created_at, totalPrice, extrasPrice")
@@ -83,11 +89,11 @@ export const getBookingsAfterDate = async (date: string) => {
 		throw new Error("Bookings could not get loaded");
 	}
 
-	return data;
+	return data as BookingType[];
 };
 
 // Returns all STAYS that are were created after the given date
-export const getStaysAfterDate = async (date: string) => {
+export const getStaysAfterDate = async (date: string): Promise<BookingType[]> => {
 	const { data, error } = await supabase
 		.from("bookings")
 		.select("*, guests(fullName)")
@@ -99,7 +105,7 @@ export const getStaysAfterDate = async (date: string) => {
 		throw new Error("Bookings could not get loaded");
 	}
 
-	return data;
+	return data as unknown as BookingType[];
 };
 
 // Activity means that there is a check in or a check out today

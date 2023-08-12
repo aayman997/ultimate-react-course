@@ -1,8 +1,16 @@
 import Stat from "./Stat.tsx";
 import { HiOutlineBriefcase, HiOutlineBanknotes, HiOutlineCalendarDays, HiOutlineChartBar } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers.ts";
+import { BookingType } from "../../../types/Booking.ts";
 
-const Stats = ({ bookings, confirmedStays, numDays, cabinCount }) => {
+interface StatsProps {
+	bookings: BookingType[];
+	confirmedStays: BookingType[];
+	numDays: number;
+	cabinCount: number;
+}
+
+const Stats = ({ bookings, confirmedStays, numDays, cabinCount }: StatsProps) => {
 	// 1.
 	const numBookings = bookings.length;
 	// 2.

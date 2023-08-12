@@ -7,8 +7,6 @@ import { NewCabin } from "../../../types/NewCabin.ts";
 import Menus from "../../ui/Menus.tsx";
 import { useSearchParams } from "react-router-dom";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 interface CabinType extends NewCabin {
 	id: number;
 	image: string;
@@ -27,7 +25,7 @@ const CabinTable = () => {
 	}
 
 	const filterValue = searchParams.get("discount") ?? "all";
-	let filteredCabins;
+	let filteredCabins: CabinType[] = [];
 	if (filterValue === "all") {
 		filteredCabins = cabins;
 	}
@@ -38,10 +36,22 @@ const CabinTable = () => {
 		filteredCabins = cabins?.filter(cabin => cabin.discount !== 0);
 	}
 
+	const fieldToProperty: Record<string, keyof CabinType> = {
+		name        : "name",
+		maxCapacity : "maxCapacity",
+		regularPrice: "regularPrice",
+		discount    : "discount"
+	};
+
 	const sortBy = searchParams.get("sortBy") ?? "startDate-asc";
 	const [field, direction] = sortBy.split("-");
 	const modifier = direction === "asc" ? 1 : -1;
-	const sortedCabins = filteredCabins.sort((a, b) => (a[field] - b[field]) * modifier);
+
+	const sortedCabins = filteredCabins.slice().sort((a, b) => {
+		const aValue = a[fieldToProperty[field]] as number;
+		const bValue = b[fieldToProperty[field]] as number;
+		return (aValue - bValue) * modifier;
+	});
 
 	return (
 		<Menus>
@@ -54,7 +64,7 @@ const CabinTable = () => {
 					<div>Discount</div>
 					<div></div>
 				</Table.Header>
-				<Table.Body data={sortedCabins as CabinType[]} render={(cabin: CabinType) => <CabinRow cabin={cabin} key={cabin.id} />} />
+				<Table.Body data={sortedCabins} render={(cabin) => <CabinRow cabin={cabin as CabinType} key={cabin.id} />} />
 			</Table>
 		</Menus>
 	);

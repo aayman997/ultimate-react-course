@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Logo from "./Logo.tsx";
 import MainNav from "./MainNav.tsx";
-import Uploader from "../data/Uploader.tsx";
 
 const StyledSidebar = styled.aside`
   background: var(--color-grey-0);
@@ -19,8 +18,6 @@ const Sidebar = () => {
 		<StyledSidebar>
 			<Logo />
 			<MainNav />
-
-			<Uploader />
 		</StyledSidebar>
 	);
 };

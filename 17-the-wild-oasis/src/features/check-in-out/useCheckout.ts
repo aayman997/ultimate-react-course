@@ -1,17 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateBooking } from "../../services/apiBookings.ts";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 export const useCheckout = () => {
 	const queryClient = useQueryClient();
 	const { mutate: checkout, isLoading: isCheckingOut } = useMutation({
-		mutationFn: (bookingId) => updateBooking(bookingId, {
+		mutationFn: (bookingId: number) => updateBooking(bookingId, {
 			status: "checked-out"
 		}),
-		onSuccess : (data) => {
+		onSuccess : async (data) => {
 			toast.success(`Booking #${data.id} successfully checked out`);
-			queryClient.invalidateQueries({ active: true });
+			await queryClient.invalidateQueries({ queryKey: ["booking"] });
 		},
 		onError   : () => toast.error(`There was an error while checking out`)
 	});

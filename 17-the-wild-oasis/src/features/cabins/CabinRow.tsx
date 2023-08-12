@@ -23,16 +23,16 @@ const Cabin = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-grey-600);
-  font-family: "Sono";
+  font-family: "Sono", sans-serif;
 `;
 
 const Price = styled.div`
-  font-family: "Sono";
+  font-family: "Sono", sans-serif;
   font-weight: 600;
 `;
 
 const Discount = styled.div`
-  font-family: "Sono";
+  font-family: "Sono", sans-serif;
   font-weight: 500;
   color: var(--color-green-700);
 `;
@@ -64,7 +64,7 @@ const CabinRow = ({ cabin }: CabinProps) => {
 
 	return (
 		<Table.Row>
-			<Img src={image ?? undefined} />
+			<Img src={image as unknown as string ?? ""} />
 			<Cabin>{name}</Cabin>
 			<div>Fits up to {maxCapacity}</div>
 			<Price>{formatCurrency(regularPrice)}</Price>
@@ -73,7 +73,7 @@ const CabinRow = ({ cabin }: CabinProps) => {
 				<Menus.Menu>
 					<Menus.Toggle id={cabinId} />
 					<Menus.List id={cabinId}>
-						<Menus.Button icon={<HiSquare2Stack />} onClick={duplicate}>duplicate</Menus.Button>
+						<Menus.Button icon={<HiSquare2Stack />} onClick={duplicate} isLoading={isCreating}>duplicate</Menus.Button>
 						<Modal.Open opens="edit">
 							<Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
 						</Modal.Open>

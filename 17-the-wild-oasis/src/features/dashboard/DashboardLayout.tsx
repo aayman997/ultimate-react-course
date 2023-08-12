@@ -7,6 +7,7 @@ import { useCabins } from "../cabins/useCabins.ts";
 import SalesChart from "./SalesChart.tsx";
 import DurationChart from "./DurationChart.tsx";
 import TodayActivity from "../check-in-out/TodayActivity.tsx";
+import { BookingType } from "../../../types/Booking.ts";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -26,10 +27,12 @@ const DashboardLayout = () => {
 
 	return (
 		<StyledDashboardLayout>
-			<Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} cabinCount={cabins?.length} />
+			<Stats
+				bookings={bookings as BookingType[]} confirmedStays={confirmedStays as BookingType[]} numDays={numDays} cabinCount={cabins?.length as number}
+			/>
 			<TodayActivity />
-			<DurationChart confirmedStays={confirmedStays} />
-			<SalesChart bookings={bookings} numDays={numDays} />
+			<DurationChart confirmedStays={confirmedStays as BookingType[]} />
+			<SalesChart bookings={bookings as BookingType[]} numDays={numDays} />
 		</StyledDashboardLayout>
 	);
 };

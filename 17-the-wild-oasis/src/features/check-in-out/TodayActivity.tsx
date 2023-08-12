@@ -5,6 +5,7 @@ import Row from "../../ui/Row";
 import { useTodayActivity } from "./useTodayActivity.ts";
 import Spinner from "../../ui/Spinner.tsx";
 import TodayItem from "./TodayItem.tsx";
+import { BookingType } from "../../../types/Booking.ts";
 
 const StyledToday = styled.div`
   /* Box */
@@ -43,24 +44,28 @@ const NoActivity = styled.p`
 
 function TodayActivity() {
 	const { isLoading, activities } = useTodayActivity();
-	// if (isLoading) {
-	// 	return <Spinner />;
-	// }
+
+	const renderActivities = () => {
+		if (!isLoading) {
+			if (activities?.length as number > 0) {
+				return (
+					<TodayList>
+						{activities?.map((activity) => <TodayItem activity={activity as unknown as BookingType} key={activity.id} />)}
+					</TodayList>
+				);
+			} else {
+				return <NoActivity>No activity today...</NoActivity>;
+			}
+		}
+		return <Spinner />;
+	};
+
 	return (
 		<StyledToday>
 			<Row type="horizontal">
 				<Heading as="h2">Today</Heading>
 			</Row>
-			{
-				!isLoading
-				?
-				activities?.length > 0
-				? <TodayList>
-					{activities?.map(activity => <TodayItem activity={activity} key={activity.id} />)}
-				</TodayList>
-				: <NoActivity>No activity today...</NoActivity>
-				: <Spinner />
-			}
+			{renderActivities()}
 		</StyledToday>
 	);
 }

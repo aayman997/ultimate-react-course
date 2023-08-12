@@ -6,10 +6,10 @@ export const useDelete = () => {
 	const queryClient = useQueryClient();
 
 	const { mutate: deleteBooking, isLoading: isDeleting } = useMutation({
-		mutationFn: (bookingId) => deleteBookingApi(bookingId),
-		onSuccess : () => {
+		mutationFn: (bookingId: number) => deleteBookingApi(bookingId),
+		onSuccess : async () => {
 			toast.success(`Booking successfully deleted`);
-			queryClient.invalidateQueries({ active: true });
+			await queryClient.invalidateQueries({ queryKey: ["bookings"] });
 		},
 		onError   : () => toast.error(`There was an error while deleting the booking`)
 	});

@@ -15,6 +15,7 @@ import Checkbox from "../../ui/Checkbox.tsx";
 import { formatCurrency } from "../../utils/helpers.ts";
 import { useCheckin } from "./useCheckin.ts";
 import { useSetting } from "../settings/useSetting.ts";
+import { BookingType } from "../../../types/Booking.ts";
 
 const Box = styled.div`
   /* Box */
@@ -32,7 +33,7 @@ function CheckinBooking() {
 	const moveBack = useMoveBack();
 	const { checkin, isCheckingIn } = useCheckin();
 	useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking?.isPaid]);
-
+	let optionalBreakfastPrice: number = 0;
 	if (isLoading || isLoadingSettings) {
 		return <Spinner />;
 	}
@@ -44,9 +45,11 @@ function CheckinBooking() {
 		numGuests,
 		hasBreakfast,
 		numNights
-	} = booking;
+	} = booking as BookingType;
 
-	const optionalBreakfastPrice = settings?.breakfastPrice * numNights * numGuests;
+	if (settings) {
+		optionalBreakfastPrice = settings.breakfastPrice * numNights * numGuests;
+	}
 
 	function handleCheckin() {
 		if (!confirmPaid) {
@@ -54,7 +57,8 @@ function CheckinBooking() {
 		}
 		if (addBreakfast) {
 			checkin({
-				bookingId, breakfast: {
+				bookingId,
+				breakfast: {
 					hasBreakfast: true,
 					extrasPrice : optionalBreakfastPrice,
 					totalPrice  : totalPrice + optionalBreakfastPrice
@@ -72,7 +76,7 @@ function CheckinBooking() {
 				<ButtonText onClick={moveBack}>&larr; Back</ButtonText>
 			</Row>
 
-			<BookingDataBox booking={booking} />
+			<BookingDataBox booking={booking as BookingType} />
 			{!hasBreakfast && <Box>
 				<Checkbox
 					id="breakfast"

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Heading from "../../ui/Heading.tsx";
 import { ResponsiveContainer, Pie, PieChart, Cell, Tooltip, Legend } from "recharts";
-import { useDarkMode } from "../../context/DarkModeContext.tsx";
+import { BookingType } from "../../../types/Booking.ts";
+import { useDarkMode } from "../../context/useDarkMode.ts";
 
 const ChartBox = styled.div`
   /* Box */
@@ -107,17 +108,23 @@ const startDataDark = [
 	}
 ];
 
-function prepareData(startData, stays) {
-	// A bit ugly code, but sometimes this is what it takes when working with real data 😅
+interface StartDataType {
+	duration: string,
+	value: number,
+	color: string
+}
 
-	function incArrayValue(arr, field) {
-		return arr.map((obj) =>
-			obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
+function prepareData(startData: StartDataType[], stays: BookingType[]) {
+
+	// A bit ugly code, but sometimes this is what it takes when working with real data 😅.
+
+	function incArrayValue(arr: StartDataType[], field: string) {
+		return arr.map((obj: StartDataType) => obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
 		);
 	}
 
-	const data = stays
-		.reduce((arr, cur) => {
+	return stays
+		.reduce((arr: StartDataType[], cur: BookingType) => {
 			const num = cur.numNights;
 			if (num === 1) {
 				return incArrayValue(arr, "1 night");
@@ -146,11 +153,13 @@ function prepareData(startData, stays) {
 			return arr;
 		}, startData)
 		.filter((obj) => obj.value > 0);
-
-	return data;
 }
 
-const DurationChart = ({ confirmedStays }) => {
+interface DurationChartProps {
+	confirmedStays: BookingType[];
+}
+
+const DurationChart = ({ confirmedStays }: DurationChartProps) => {
 	const { isDarkMode } = useDarkMode();
 	const startData = isDarkMode ? startDataDark : startDataLight;
 	const data = prepareData(startData, confirmedStays);
@@ -181,7 +190,7 @@ const DurationChart = ({ confirmedStays }) => {
 					<Legend
 						verticalAlign="middle"
 						align="right"
-						width="30%"
+						width={30}
 						layout="vertical"
 						iconSize={15}
 						iconType="circle"

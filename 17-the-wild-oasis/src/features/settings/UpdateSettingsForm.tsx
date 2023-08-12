@@ -9,7 +9,6 @@ import React from "react";
 function UpdateSettingsForm() {
 	const {
 		isLoading,
-		error,
 		settings: {
 			minBookingLength,
 			maxBookingLength,

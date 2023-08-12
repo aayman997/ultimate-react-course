@@ -9,7 +9,7 @@ interface CommonRowProps {
 
 type TableContextType = {
 	columns?: string;
-	$columns?: string;
+	$columns: string;
 };
 
 interface BaseTableType {
@@ -22,7 +22,7 @@ interface TableType extends BaseTableType {
 
 
 interface CabinType extends NewCabin {
-	id: number;
+	id?: number;
 	image: string;
 }
 
@@ -91,7 +91,7 @@ const Empty = styled.p`
   margin: 2.4rem;
 `;
 
-const TableContext = createContext<TableContextType>({ columns: "" });
+const TableContext = createContext<TableContextType>({} as TableContextType);
 
 const Table = ({ $columns, children }: TableType) => {
 	return (

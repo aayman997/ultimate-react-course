@@ -11,6 +11,7 @@ import SpinnerMini from "../../ui/SpinnerMini.tsx";
 
 interface CreateUserType extends UserType {
 	fullName: string;
+	password: string;
 	passwordConfirm: string;
 }
 

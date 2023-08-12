@@ -16,6 +16,8 @@ import { useCheckout } from "../check-in-out/useCheckout.ts";
 import { useDelete } from "../check-in-out/useDelete.ts";
 import Modal from "../../ui/Modal.tsx";
 import ConfirmDelete from "../../ui/ConfirmDelete.tsx";
+import Empty from "../../ui/Empty.tsx";
+import { BookingType } from "../../../types/Booking.ts";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -24,13 +26,13 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-	const { isLoading, error, booking } = useBooking();
+	const { isLoading, booking } = useBooking();
 	const navigate = useNavigate();
 	const moveBack = useMoveBack();
 	const { checkout, isCheckingOut } = useCheckout();
 	const { deleteBooking, isDeleting } = useDelete();
 
-	const statusToTagName = {
+	const statusToTagName: Record<string, string> = {
 		unconfirmed  : "blue",
 		"checked-in" : "green",
 		"checked-out": "silver"
@@ -40,6 +42,10 @@ function BookingDetail() {
 		return <Spinner />;
 	}
 
+	if (!booking) {
+		return <Empty resourceName="booking" />;
+	}
+
 	const { status, id: bookingId } = booking;
 
 	return (
@@ -47,12 +53,12 @@ function BookingDetail() {
 			<Row type="horizontal">
 				<HeadingGroup>
 					<Heading as="h1">Booking #{bookingId}</Heading>
-					<Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+					{status && <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>}
 				</HeadingGroup>
 				<ButtonText onClick={moveBack}>&larr; Back</ButtonText>
 			</Row>
 
-			<BookingDataBox booking={booking} />
+			<BookingDataBox booking={booking as BookingType} />
 			<Modal>
 				<ButtonGroup>
 					{status === "unconfirmed" &&

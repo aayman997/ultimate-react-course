@@ -11,21 +11,16 @@ const StyledPagination = styled.div`
   justify-content: space-between;
 `;
 
-const P = styled.p`
-  font-size: 1.4rem;
-  margin-left: 0.8rem;
-
-  & span {
-    font-weight: 600;
-  }
-`;
-
 const Buttons = styled.div`
   display: flex;
   gap: 0.6rem;
 `;
 
-const PaginationButton = styled.button`
+interface PaginationButtonProps {
+	active?: boolean;
+}
+
+const PaginationButton = styled.button<PaginationButtonProps>`
   background-color: ${(props) =>
           props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
   color: ${(props) => (props.active ? " var(--color-brand-50)" : "inherit")};
@@ -60,7 +55,11 @@ const PaginationButton = styled.button`
   }
 `;
 
-const Pagination = ({ count }) => {
+interface PaginationType {
+	count: number;
+}
+
+const Pagination = ({ count }: PaginationType) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const currentPage = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
 	const pageCount = Math.ceil(count / PAGE_SIZE);

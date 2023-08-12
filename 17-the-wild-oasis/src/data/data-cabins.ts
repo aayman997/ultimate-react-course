@@ -1,10 +1,9 @@
-// @ts-ignore
 import { supabaseUrl } from "../services/supabase";
 
 const imageUrl = `${supabaseUrl}/storage/v1/object/public/cabin-images/`;
 
 
-interface Cabine {
+interface Cabin {
 	name: string;
 	maxCapacity: number;
 	regularPrice: number;
@@ -13,7 +12,7 @@ interface Cabine {
 	description: string;
 }
 
-export const cabins: Cabine[] = [
+export const cabins: Cabin[] = [
 	{
 		name        : "001",
 		maxCapacity : 2,
