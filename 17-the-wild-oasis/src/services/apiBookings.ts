@@ -53,7 +53,7 @@ export const getBookings = async ({ filter, sortBy, page }: GetBookingsType) => 
 	return { data, count };
 };
 
-export async function getBooking(id: number) {
+export const getBooking = async (id: number) => {
 	const { data, error } = await supabase
 		.from("bookings")
 		.select("*, cabins(*), guests(*)")
@@ -66,10 +66,12 @@ export async function getBooking(id: number) {
 	}
 
 	return data;
-}
+};
 
-// Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
-export async function getBookingsAfterDate(date: Date) {
+// Returns all BOOKINGS that are were created after the given date.
+// Useful to get bookings created in the last 30 days, for example.
+// date: ISOString
+export const getBookingsAfterDate = async (date: string) => {
 	const { data, error } = await supabase
 		.from("bookings")
 		.select("created_at, totalPrice, extrasPrice")
@@ -82,13 +84,12 @@ export async function getBookingsAfterDate(date: Date) {
 	}
 
 	return data;
-}
+};
 
 // Returns all STAYS that are were created after the given date
-export async function getStaysAfterDate(date: Date) {
+export const getStaysAfterDate = async (date: string) => {
 	const { data, error } = await supabase
 		.from("bookings")
-		// .select('*')
 		.select("*, guests(fullName)")
 		.gte("startDate", date)
 		.lte("startDate", getToday());
@@ -99,10 +100,10 @@ export async function getStaysAfterDate(date: Date) {
 	}
 
 	return data;
-}
+};
 
 // Activity means that there is a check in or a check out today
-export async function getStaysTodayActivity() {
+export const getStaysTodayActivity = async () => {
 	const { data, error } = await supabase
 		.from("bookings")
 		.select("*, guests(fullName, nationality, countryFlag)")
@@ -120,9 +121,9 @@ export async function getStaysTodayActivity() {
 		throw new Error("Bookings could not get loaded");
 	}
 	return data;
-}
+};
 
-export async function updateBooking(id: number, obj: object) {
+export const updateBooking = async (id: number, obj: object) => {
 	const { data, error } = await supabase
 		.from("bookings")
 		.update(obj)
@@ -135,9 +136,9 @@ export async function updateBooking(id: number, obj: object) {
 		throw new Error("Booking could not be updated");
 	}
 	return data;
-}
+};
 
-export async function deleteBooking(id: number) {
+export const deleteBooking = async (id: number) => {
 	// REMEMBER RLS POLICIES
 	const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
@@ -146,4 +147,4 @@ export async function deleteBooking(id: number) {
 		throw new Error("Booking could not be deleted");
 	}
 	return data;
-}
+};
