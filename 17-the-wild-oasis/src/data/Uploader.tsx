@@ -9,13 +9,6 @@ import { cabins } from "./data-cabins";
 import { guests } from "./data-guests";
 import { BookingType } from "../../types/Booking.ts";
 
-// const originalSettings = {
-//   minBookingLength: 3,
-//   maxBookingLength: 30,
-//   maxGuestsPerBooking: 10,
-//   breakfastPrice: 15,
-// };
-
 async function deleteGuests() {
 	const { error } = await supabase.from("guests").delete().gt("id", 0);
 	if (error) {

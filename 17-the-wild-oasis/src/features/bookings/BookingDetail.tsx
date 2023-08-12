@@ -17,7 +17,6 @@ import { useDelete } from "../check-in-out/useDelete.ts";
 import Modal from "../../ui/Modal.tsx";
 import ConfirmDelete from "../../ui/ConfirmDelete.tsx";
 import Empty from "../../ui/Empty.tsx";
-import { BookingType } from "../../../types/Booking.ts";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -58,7 +57,7 @@ function BookingDetail() {
 				<ButtonText onClick={moveBack}>&larr; Back</ButtonText>
 			</Row>
 
-			<BookingDataBox booking={booking as BookingType} />
+			<BookingDataBox booking={booking} />
 			<Modal>
 				<ButtonGroup>
 					{status === "unconfirmed" &&

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { createContext, ReactNode, useContext } from "react";
+import React, { createContext, ReactNode, useContext, useMemo } from "react";
 import { NewCabin } from "../../types/NewCabin.ts";
 import { BookingType } from "../../types/Booking.ts";
 
@@ -28,7 +28,7 @@ interface CabinType extends NewCabin {
 
 interface BodyTypes {
 	data: CabinType[] | BookingType[] | [];
-	render: (cabins: CabinType | BookingType) => JSX.Element;
+	render: (cabins: CabinType | BookingType) => React.JSX.Element;
 }
 
 const StyledTable = styled.div`
@@ -94,8 +94,14 @@ const Empty = styled.p`
 const TableContext = createContext<TableContextType>({} as TableContextType);
 
 const Table = ({ $columns, children }: TableType) => {
+	const value = useMemo(() => {
+		return {
+			$columns
+		};
+
+	}, [$columns]);
 	return (
-		<TableContext.Provider value={{ $columns }}>
+		<TableContext.Provider value={value}>
 			<StyledTable role="table">{children}</StyledTable>
 		</TableContext.Provider>
 	);

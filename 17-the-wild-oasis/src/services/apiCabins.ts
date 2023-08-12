@@ -19,9 +19,9 @@ export const getCabins = async (): Promise<CabinType[]> => {
 };
 
 export const createEditCabin = async (newCabin: NewCabin, id?: number): Promise<CabinType> => {
-	const hasImagePath: boolean = (newCabin.image as unknown as string)?.startsWith?.(supabaseUrl);
+	const hasImagePath: boolean = (newCabin.image as string)?.startsWith?.(supabaseUrl);
 	const imageName: string = `${Math.random()}-${(newCabin.image as File).name}`.replace("/", "");
-	const imagePath: File | string = hasImagePath ? newCabin.image as File : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}` as string;
+	const imagePath: File | string = hasImagePath ? newCabin.image as File : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 	// 1. Create/Edit cabin
 	// let query = supabase.from("cabins");
 	let query;

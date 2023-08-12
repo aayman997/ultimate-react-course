@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { createContext, useState, useContext, ReactNode, Dispatch, SetStateAction } from "react";
+import React, { createContext, useState, useContext, ReactNode, Dispatch, SetStateAction, useMemo } from "react";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import { useOutsideClick } from "../hooks/useOutsideClick.ts";
@@ -74,7 +74,7 @@ const StyledButton = styled.button`
   }
 `;
 
-interface createContextProps {
+interface CreateContextProps {
 	openId: string;
 	close: () => void;
 	open: Dispatch<SetStateAction<string>>;
@@ -82,7 +82,7 @@ interface createContextProps {
 	setPosition: Dispatch<SetStateAction<PositionType | null>>;
 }
 
-const MenusContext = createContext<createContextProps>({} as createContextProps);
+const MenusContext = createContext<CreateContextProps>({} as CreateContextProps);
 
 interface MenusType {
 	children: ReactNode;
@@ -93,8 +93,17 @@ const Menus = ({ children }: MenusType) => {
 	const [position, setPosition] = useState<PositionType | null>(null);
 	const close = () => setOpenId("");
 	const open = setOpenId;
+	const value = useMemo(() => {
+		return {
+			openId,
+			close,
+			open,
+			position,
+			setPosition
+		};
+	}, [open, openId, position]);
 	return (
-		<MenusContext.Provider value={{ openId, close, open, position, setPosition }}>
+		<MenusContext.Provider value={value}>
 			{children}
 		</MenusContext.Provider>
 	);

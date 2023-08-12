@@ -18,7 +18,7 @@ const Cabin = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-grey-600);
-  font-family: "Sono";
+  font-family: "Sono",sans-serif;
 `;
 
 const Stacked = styled.div`
@@ -37,7 +37,7 @@ const Stacked = styled.div`
 `;
 
 const Amount = styled.div`
-  font-family: "Sono";
+  font-family: "Sono", sans-serif;
   font-weight: 500;
 `;
 

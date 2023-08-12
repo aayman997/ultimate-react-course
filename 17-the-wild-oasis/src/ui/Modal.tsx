@@ -61,11 +61,8 @@ interface ModalOpenPropsType extends BasePropsType {
 	opens: string;
 }
 
-// type nameProp = "cabin-form" | "table";
-type nameProp = string;
-
 interface ModalWindowPropsType extends BasePropsType {
-	name: nameProp;
+	name: string;
 }
 
 type ModalContextType = {

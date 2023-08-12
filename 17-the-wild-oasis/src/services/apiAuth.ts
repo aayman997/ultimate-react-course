@@ -64,7 +64,7 @@ export const logout = async () => {
 	}
 };
 
-interface updateCurrentUser {
+interface UpdateCurrentUserProps {
 	password?: string;
 	fullName?: string;
 	avatar?: File | null;
@@ -77,7 +77,7 @@ interface UpdateUserType {
 	};
 }
 
-export const updateCurrentUser = async ({ password, fullName, avatar }: updateCurrentUser) => {
+export const updateCurrentUser = async ({ password, fullName, avatar }: UpdateCurrentUserProps) => {
 	// 1. Update password OR fullName
 	let updateData: UpdateUserType = {};
 
