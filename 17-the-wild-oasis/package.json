@@ -25,6 +25,7 @@
     "recharts": "^2.7.3"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@supabase/postgrest-js": "^1.7.2",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
