@@ -1,16 +1,8 @@
-import styled, { css, FlattenSimpleInterpolation } from "styled-components";
+import styled, { css } from "styled-components";
 
 // Define types for the size and variation objects
 type SizeType = "small" | "medium" | "large";
 type VariationType = "primary" | "secondary" | "danger";
-
-type Sizes = {
-	[key in SizeType]: FlattenSimpleInterpolation;
-};
-
-type Variations = {
-	[key in VariationType]: FlattenSimpleInterpolation;
-};
 
 // Define props type for the Button component
 interface ButtonProps {
@@ -21,7 +13,7 @@ interface ButtonProps {
 // Define the complete CSS type for the Button component
 // type ButtonCSS = CSSObject & Sizes & Variations;
 
-const sizes: Sizes = {
+const sizes = {
 	small : css`
       font-size: 1.2rem;
       padding: 0.4rem 0.8rem;
@@ -41,7 +33,7 @@ const sizes: Sizes = {
 	`
 };
 
-const variations: Variations = {
+const variations = {
 	primary  : css`
       color: var(--color-brand-50);
       background-color: var(--color-brand-600);
